@@ -10,7 +10,13 @@ import Firebase
 import GoogleMaps
 
 class HomeVC: UIViewController {
+    
+    // MARK: - Outlets
+    
+    @IBOutlet var mapView: GMSMapView!
+    // MARK: - Variables
 
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -31,30 +37,24 @@ class HomeVC: UIViewController {
 //            }
 //        }
 //
-        GMSServices.provideAPIKey("AIzaSyB6RYZkcGKumvHuKMuUBTFXlpKEWorfo_c")
+//        GMSServices.provideAPIKey("AIzaSyB6RYZkcGKumvHuKMuUBTFXlpKEWorfo_c")
         
-        let camera = GMSCameraPosition.camera(withLatitude: -33.86, longitude: 151.20, zoom: 16.0)
-        let mapView = GMSMapView.map(withFrame: self.view.frame, camera: camera)
-        self.view.addSubview(mapView)
-
-        // Creates a marker in the center of the map.
-        let marker = GMSMarker()
-        marker.position = CLLocationCoordinate2D(latitude: -33.86, longitude: 151.20)
-        marker.title = "Sydney"
-        marker.snippet = "Australia"
-        marker.map = mapView
+//        let camera = GMSCameraPosition.camera(withLatitude: -33.86, longitude: 151.20, zoom: 16.0)
+//        let mapView = GMSMapView.map(withFrame: self.view.frame, camera: camera)
+//        self.view.addSubview(mapView)
+//
+//        // Creates a marker in the center of the map.
+//        let marker = GMSMarker()
+//        marker.position = CLLocationCoordinate2D(latitude: -33.86, longitude: 151.20)
+//        marker.title = "Sydney"
+//        marker.snippet = "Australia"
+//        marker.map = mapView
 
     }
 
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
+    // MARK: - Actions
+    
+    // MARK: - Methods
 
 }

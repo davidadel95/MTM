@@ -10,6 +10,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HomeVC" customModule="MTM" customModuleProvider="target">
             <connections>
+                <outlet property="mapView" destination="uck-aV-1je" id="Ppo-he-2fr"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -18,20 +19,94 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gHM-FZ-yvV">
-                    <rect key="frame" x="186" y="438" width="42" height="21"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <nil key="textColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uck-aV-1je" customClass="GMSMapView">
+                    <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2gg-P2-uWH">
+                    <rect key="frame" x="20" y="144" width="374" height="160"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1jq-Xu-B8x">
+                            <rect key="frame" x="8" y="8" width="40" height="40"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="40" id="Ji0-bB-A3O"/>
+                                <constraint firstAttribute="height" constant="40" id="Qa1-xs-G3P"/>
+                            </constraints>
+                            <state key="normal" image="menu"/>
+                        </button>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="nmZ-y7-8dy">
+                            <rect key="frame" x="16" y="56" width="342" height="88"/>
+                            <subviews>
+                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Your location" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="miA-uC-HnK">
+                                    <rect key="frame" x="0.0" y="0.0" width="342" height="40"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <textInputTraits key="textInputTraits" autocorrectionType="no" textContentType="location"/>
+                                </textField>
+                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Destination" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ju4-lh-Hho">
+                                    <rect key="frame" x="0.0" y="48" width="342" height="40"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <textInputTraits key="textInputTraits" autocorrectionType="no" textContentType="location"/>
+                                </textField>
+                            </subviews>
+                        </stackView>
+                    </subviews>
+                    <viewLayoutGuide key="safeArea" id="eM5-zU-e0L"/>
+                    <color key="backgroundColor" red="0.89803921568627454" green="0.89411764705882346" blue="0.90980392156862744" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="nmZ-y7-8dy" secondAttribute="bottom" constant="16" id="2Ri-zW-Nl7"/>
+                        <constraint firstItem="1jq-Xu-B8x" firstAttribute="top" secondItem="2gg-P2-uWH" secondAttribute="top" constant="8" id="CKK-29-F3d"/>
+                        <constraint firstItem="nmZ-y7-8dy" firstAttribute="top" secondItem="1jq-Xu-B8x" secondAttribute="bottom" constant="8" id="M7I-e4-0Za"/>
+                        <constraint firstAttribute="trailing" secondItem="nmZ-y7-8dy" secondAttribute="trailing" constant="16" id="PC7-j8-BNz"/>
+                        <constraint firstItem="nmZ-y7-8dy" firstAttribute="leading" secondItem="2gg-P2-uWH" secondAttribute="leading" constant="16" id="QzI-GT-TuQ"/>
+                        <constraint firstItem="1jq-Xu-B8x" firstAttribute="leading" secondItem="2gg-P2-uWH" secondAttribute="leading" constant="8" id="gTz-gV-LcY"/>
+                        <constraint firstAttribute="height" constant="160" id="pdJ-HB-A09"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="12"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="layer.maskToBounds" value="YES"/>
+                    </userDefinedRuntimeAttributes>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UNr-1B-l7T">
+                    <rect key="frame" x="20" y="772" width="374" height="50"/>
+                    <color key="backgroundColor" red="0.0" green="0.3967907726764679" blue="0.69991904497146606" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="Zbn-TG-NbV"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" weight="black" pointSize="25"/>
+                    <state key="normal" title="REQUEST RD">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </state>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="10"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="layer.maskToBounds" value="YES"/>
+                    </userDefinedRuntimeAttributes>
+                </button>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-            <point key="canvasLocation" x="130" y="129"/>
+            <constraints>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="UNr-1B-l7T" secondAttribute="trailing" constant="20" id="1t3-mD-y7M"/>
+                <constraint firstItem="2gg-P2-uWH" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="100" id="H3I-FQ-rmm"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="uck-aV-1je" secondAttribute="bottom" id="PsZ-tO-b9D"/>
+                <constraint firstItem="UNr-1B-l7T" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="XQJ-D4-uBa"/>
+                <constraint firstItem="uck-aV-1je" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="XrM-KQ-iOx"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="UNr-1B-l7T" secondAttribute="bottom" constant="40" id="fDc-4K-U1Z"/>
+                <constraint firstItem="2gg-P2-uWH" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="jGC-mQ-mOJ"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="2gg-P2-uWH" secondAttribute="trailing" constant="20" id="lMg-bB-bUm"/>
+                <constraint firstItem="uck-aV-1je" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="r1S-D2-Sd6"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="uck-aV-1je" secondAttribute="trailing" id="wGk-8e-1cZ"/>
+            </constraints>
+            <point key="canvasLocation" x="128.98550724637681" y="128.57142857142856"/>
         </view>
     </objects>
     <resources>
+        <image name="menu" width="50" height="50"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
