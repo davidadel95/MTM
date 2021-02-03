@@ -20,6 +20,9 @@
 		88B6A0A525CB1866003311DA /* UITableView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B6A0A425CB1866003311DA /* UITableView+Extension.swift */; };
 		88B6A0F825CB28C1003311DA /* ResultsTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B6A0F625CB28C1003311DA /* ResultsTVC.swift */; };
 		88B6A0F925CB28C1003311DA /* ResultsTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88B6A0F725CB28C1003311DA /* ResultsTVC.xib */; };
+		88B6A11625CB2D26003311DA /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B6A11525CB2D26003311DA /* HomeViewModel.swift */; };
+		88B6A11A25CB2DD6003311DA /* SourceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B6A11925CB2DD6003311DA /* SourceModel.swift */; };
+		88B6A11E25CB2EB1003311DA /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B6A11D25CB2EB1003311DA /* Constants.swift */; };
 		AE2C25052AFEA0D592A5EB1B /* Pods_MTM.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B408E2592BE98C11B096B49 /* Pods_MTM.framework */; };
 /* End PBXBuildFile section */
 
@@ -41,6 +44,9 @@
 		88B6A0A425CB1866003311DA /* UITableView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Extension.swift"; sourceTree = "<group>"; };
 		88B6A0F625CB28C1003311DA /* ResultsTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsTVC.swift; sourceTree = "<group>"; };
 		88B6A0F725CB28C1003311DA /* ResultsTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ResultsTVC.xib; sourceTree = "<group>"; };
+		88B6A11525CB2D26003311DA /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		88B6A11925CB2DD6003311DA /* SourceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceModel.swift; sourceTree = "<group>"; };
+		88B6A11D25CB2EB1003311DA /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		F0FFADF343FF1378105EEEDC /* Pods-MTM.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MTM.release.xcconfig"; path = "Target Support Files/Pods-MTM/Pods-MTM.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -88,6 +94,8 @@
 		88B69FDA25CAFB7F003311DA /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				88B6A11825CB2DCB003311DA /* Model */,
+				88B6A11425CB2D1B003311DA /* ViewModel */,
 				88B69FDC25CAFB87003311DA /* ViewController */,
 				88B69FDB25CAFB83003311DA /* Views */,
 			);
@@ -160,6 +168,7 @@
 			isa = PBXGroup;
 			children = (
 				88B6A0A225CB1851003311DA /* Helpers */,
+				88B6A11D25CB2EB1003311DA /* Constants.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -221,6 +230,22 @@
 				88B6A0F625CB28C1003311DA /* ResultsTVC.swift */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		88B6A11425CB2D1B003311DA /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				88B6A11525CB2D26003311DA /* HomeViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		88B6A11825CB2DCB003311DA /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				88B6A11925CB2DD6003311DA /* SourceModel.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		BB90E5437D8978C21C944657 /* Pods */ = {
@@ -378,10 +403,13 @@
 			files = (
 				88B69FDF25CAFB93003311DA /* HomeVC.swift in Sources */,
 				88B69FC425CAFA12003311DA /* AppDelegate.swift in Sources */,
+				88B6A11625CB2D26003311DA /* HomeViewModel.swift in Sources */,
 				88B6A0A525CB1866003311DA /* UITableView+Extension.swift in Sources */,
 				88B6A09D25CB14E9003311DA /* MenuTVC.swift in Sources */,
 				88B6A0F825CB28C1003311DA /* ResultsTVC.swift in Sources */,
+				88B6A11A25CB2DD6003311DA /* SourceModel.swift in Sources */,
 				88B6A09525CB1260003311DA /* SideMenuVC.swift in Sources */,
+				88B6A11E25CB2EB1003311DA /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
