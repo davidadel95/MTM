@@ -15,4 +15,7 @@ target 'MTM' do
   pod 'GooglePlaces', '4.1.0'
   # Side Menu
   pod 'SideMenuSwift'
+  # IQKeyboardManager
+  pod 'IQKeyboardManagerSwift'
+
 end
