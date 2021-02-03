@@ -151,6 +151,7 @@
 				88B69FBD25CAFA12003311DA /* Frameworks */,
 				88B69FBE25CAFA12003311DA /* Resources */,
 				47A4AEB22E2C979A7D61BAD0 /* [CP] Embed Pods Frameworks */,
+				C0252A171F3A3AD8C2A188A1 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -223,6 +224,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MTM/Pods-MTM-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C0252A171F3A3AD8C2A188A1 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MTM/Pods-MTM-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MTM/Pods-MTM-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MTM/Pods-MTM-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		CFFEB039728CD3B4AE4B17D3 /* [CP] Check Pods Manifest.lock */ = {

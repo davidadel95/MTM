@@ -6,15 +6,11 @@ target 'MTM' do
   use_frameworks!
 
   # Pods for MTM
-  
-  # add the Firebase pod for Google Analytics
+  # Firebase
   pod 'Firebase/Analytics'
-  # add pods for any other desired Firebase products
-  # https://firebase.google.com/docs/ios/setup#available-pods
-
-
   pod 'Firebase/Firestore'
-
-  # Optionally, include the Swift extensions if you're using Swift.
   pod 'FirebaseFirestoreSwift'
+  # Google Maps
+  pod 'GoogleMaps', '4.1.0'
+  pod 'GooglePlaces', '4.1.0'
 end
