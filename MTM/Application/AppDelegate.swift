@@ -8,6 +8,7 @@
 import UIKit
 import Firebase
 import GoogleMaps
+import SideMenuSwift
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -18,7 +19,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         window = UIWindow(frame: UIScreen.main.bounds)
-        let mainController = HomeVC() as UIViewController
+        
+        SideMenuController.preferences.basic.menuWidth = (self.window?.frame.width)! * 2/3
+        SideMenuController.preferences.basic.direction = .left
+        
+        let mainController = SideMenuController(contentViewController: HomeVC(), menuViewController: SideMenuVC()) as UIViewController
         let navigationController = UINavigationController(rootViewController: mainController)
         navigationController.navigationBar.isTranslucent = false
         navigationController.navigationBar.isHidden = true

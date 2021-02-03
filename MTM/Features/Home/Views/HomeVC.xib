@@ -33,6 +33,9 @@
                                 <constraint firstAttribute="height" constant="40" id="Qa1-xs-G3P"/>
                             </constraints>
                             <state key="normal" image="menu"/>
+                            <connections>
+                                <action selector="menuTapped:" destination="-1" eventType="touchUpInside" id="mta-yp-8sf"/>
+                            </connections>
                         </button>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="nmZ-y7-8dy">
                             <rect key="frame" x="16" y="56" width="342" height="88"/>

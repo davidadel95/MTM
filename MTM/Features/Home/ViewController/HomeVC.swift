@@ -51,6 +51,10 @@ class HomeVC: UIViewController {
 
     // MARK: - Actions
     
+    @IBAction func menuTapped(_ sender: Any) {
+        print("menu")
+        sideMenuController?.revealMenu()
+    }
     // MARK: - Methods
     
     func setupMapView(){
