@@ -12,8 +12,10 @@ import GoogleMaps
 class HomeVC: UIViewController {
     
     // MARK: - Outlets
-    
     @IBOutlet var mapView: GMSMapView!
+    @IBOutlet var resultsTableView: UITableView!
+    @IBOutlet var resultsContainerView: UIView!
+    
     // MARK: - Variables
     var locationManager = CLLocationManager()
     // MARK: - Lifecycle
@@ -45,6 +47,7 @@ class HomeVC: UIViewController {
 //
 //        // Creates a marker in the center of the map.
         
+        setupViews()
         setupMapView()
     }
 
@@ -61,7 +64,13 @@ class HomeVC: UIViewController {
         self.mapView.isMyLocationEnabled = true
         self.locationManager.delegate = self
         self.locationManager.startUpdatingLocation()
-
+    }
+    
+    func setupViews(){
+        resultsTableView.delegate = self
+        resultsTableView.dataSource = self
+        
+        resultsTableView.registerCellNib(cellClass: ResultsTVC.self)
     }
 
 }
@@ -79,12 +88,30 @@ extension HomeVC: CLLocationManagerDelegate{
         let marker = GMSMarker()
         marker.position = CLLocationCoordinate2D(latitude: (location?.coordinate.latitude)!, longitude: (location?.coordinate.longitude)!)
         marker.title = "You are here"
-//        marker.snippet = "Australia"
         marker.map = mapView
         
         //Finally stop updating location otherwise it will come again and again in this delegate
         self.locationManager.stopUpdatingLocation()
         
         
+    }
+}
+
+extension HomeVC: UITableViewDataSource{
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 10
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ResultsTVC") as! ResultsTVC
+        cell.resultLbl.text = "Hello"
+        return cell
+    }
+    
+    
+}
+extension HomeVC: UITableViewDelegate{
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 40
     }
 }

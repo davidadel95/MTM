@@ -16,6 +16,6 @@ target 'MTM' do
   # Side Menu
   pod 'SideMenuSwift'
   # IQKeyboardManager
-  pod 'IQKeyboardManagerSwift'
+  pod 'IQKeyboardManagerSwift', '6.3.0'
 
 end

@@ -18,6 +18,8 @@
 		88B6A09D25CB14E9003311DA /* MenuTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B6A09B25CB14E9003311DA /* MenuTVC.swift */; };
 		88B6A09E25CB14E9003311DA /* MenuTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88B6A09C25CB14E9003311DA /* MenuTVC.xib */; };
 		88B6A0A525CB1866003311DA /* UITableView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B6A0A425CB1866003311DA /* UITableView+Extension.swift */; };
+		88B6A0F825CB28C1003311DA /* ResultsTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B6A0F625CB28C1003311DA /* ResultsTVC.swift */; };
+		88B6A0F925CB28C1003311DA /* ResultsTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88B6A0F725CB28C1003311DA /* ResultsTVC.xib */; };
 		AE2C25052AFEA0D592A5EB1B /* Pods_MTM.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B408E2592BE98C11B096B49 /* Pods_MTM.framework */; };
 /* End PBXBuildFile section */
 
@@ -37,6 +39,8 @@
 		88B6A09B25CB14E9003311DA /* MenuTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTVC.swift; sourceTree = "<group>"; };
 		88B6A09C25CB14E9003311DA /* MenuTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MenuTVC.xib; sourceTree = "<group>"; };
 		88B6A0A425CB1866003311DA /* UITableView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Extension.swift"; sourceTree = "<group>"; };
+		88B6A0F625CB28C1003311DA /* ResultsTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsTVC.swift; sourceTree = "<group>"; };
+		88B6A0F725CB28C1003311DA /* ResultsTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ResultsTVC.xib; sourceTree = "<group>"; };
 		F0FFADF343FF1378105EEEDC /* Pods-MTM.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MTM.release.xcconfig"; path = "Target Support Files/Pods-MTM/Pods-MTM.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -93,9 +97,8 @@
 		88B69FDB25CAFB83003311DA /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				88B6A09925CB14D5003311DA /* Cells */,
+				88B6A0F425CB28AF003311DA /* Cells */,
 				88B69FDE25CAFB93003311DA /* HomeVC.xib */,
-				88B6A09425CB1260003311DA /* SideMenuVC.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -103,9 +106,8 @@
 		88B69FDC25CAFB87003311DA /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				88B6A09A25CB14DA003311DA /* Cells */,
+				88B6A0F525CB28B5003311DA /* Cells */,
 				88B69FDD25CAFB93003311DA /* HomeVC.swift */,
-				88B6A09325CB1260003311DA /* SideMenuVC.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -124,6 +126,7 @@
 			isa = PBXGroup;
 			children = (
 				88B69FDA25CAFB7F003311DA /* Home */,
+				88B6A0C025CB19FF003311DA /* Menu */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -175,6 +178,49 @@
 				88B6A0A425CB1866003311DA /* UITableView+Extension.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		88B6A0C025CB19FF003311DA /* Menu */ = {
+			isa = PBXGroup;
+			children = (
+				88B6A0C325CB1A1B003311DA /* ViewController */,
+				88B6A0C225CB1A15003311DA /* Views */,
+			);
+			path = Menu;
+			sourceTree = "<group>";
+		};
+		88B6A0C225CB1A15003311DA /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				88B6A09925CB14D5003311DA /* Cells */,
+				88B6A09425CB1260003311DA /* SideMenuVC.xib */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		88B6A0C325CB1A1B003311DA /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				88B6A09A25CB14DA003311DA /* Cells */,
+				88B6A09325CB1260003311DA /* SideMenuVC.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		88B6A0F425CB28AF003311DA /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				88B6A0F725CB28C1003311DA /* ResultsTVC.xib */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		88B6A0F525CB28B5003311DA /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				88B6A0F625CB28C1003311DA /* ResultsTVC.swift */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		BB90E5437D8978C21C944657 /* Pods */ = {
@@ -256,6 +302,7 @@
 			files = (
 				88B6A09E25CB14E9003311DA /* MenuTVC.xib in Resources */,
 				88B69FD025CAFA13003311DA /* LaunchScreen.storyboard in Resources */,
+				88B6A0F925CB28C1003311DA /* ResultsTVC.xib in Resources */,
 				88B69FEE25CAFDE5003311DA /* GoogleService-Info.plist in Resources */,
 				88B6A09625CB1260003311DA /* SideMenuVC.xib in Resources */,
 				88B69FE025CAFB93003311DA /* HomeVC.xib in Resources */,
@@ -333,6 +380,7 @@
 				88B69FC425CAFA12003311DA /* AppDelegate.swift in Sources */,
 				88B6A0A525CB1866003311DA /* UITableView+Extension.swift in Sources */,
 				88B6A09D25CB14E9003311DA /* MenuTVC.swift in Sources */,
+				88B6A0F825CB28C1003311DA /* ResultsTVC.swift in Sources */,
 				88B6A09525CB1260003311DA /* SideMenuVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

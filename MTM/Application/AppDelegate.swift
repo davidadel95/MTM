@@ -9,6 +9,7 @@ import UIKit
 import Firebase
 import GoogleMaps
 import SideMenuSwift
+import IQKeyboardManagerSwift
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -32,6 +33,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         FirebaseApp.configure()
         GMSServices.provideAPIKey("AIzaSyB6RYZkcGKumvHuKMuUBTFXlpKEWorfo_c")
+        
+        IQKeyboardManager.shared.enable = true
+
         
         return true
     }

@@ -11,6 +11,8 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HomeVC" customModule="MTM" customModuleProvider="target">
             <connections>
                 <outlet property="mapView" destination="uck-aV-1je" id="Ppo-he-2fr"/>
+                <outlet property="resultsContainerView" destination="g1w-0Z-IBn" id="XvP-8k-D43"/>
+                <outlet property="resultsTableView" destination="22s-AR-1JN" id="EpS-oE-baw"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -24,7 +26,7 @@
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2gg-P2-uWH">
-                    <rect key="frame" x="20" y="144" width="374" height="160"/>
+                    <rect key="frame" x="20" y="64" width="374" height="160"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1jq-Xu-B8x">
                             <rect key="frame" x="8" y="8" width="40" height="40"/>
@@ -73,6 +75,22 @@
                         <userDefinedRuntimeAttribute type="boolean" keyPath="layer.maskToBounds" value="YES"/>
                     </userDefinedRuntimeAttributes>
                 </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g1w-0Z-IBn" userLabel="Results View">
+                    <rect key="frame" x="0.0" y="224" width="414" height="540"/>
+                    <subviews>
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="22s-AR-1JN">
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="540"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        </tableView>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="22s-AR-1JN" secondAttribute="bottom" id="4PU-DZ-I6e"/>
+                        <constraint firstItem="22s-AR-1JN" firstAttribute="leading" secondItem="g1w-0Z-IBn" secondAttribute="leading" id="7FY-Fr-Se6"/>
+                        <constraint firstItem="22s-AR-1JN" firstAttribute="top" secondItem="g1w-0Z-IBn" secondAttribute="top" id="9oh-74-YAe"/>
+                        <constraint firstAttribute="trailing" secondItem="22s-AR-1JN" secondAttribute="trailing" id="yJa-Yq-I6f"/>
+                    </constraints>
+                </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UNr-1B-l7T">
                     <rect key="frame" x="20" y="772" width="374" height="50"/>
                     <color key="backgroundColor" red="0.0" green="0.3967907726764679" blue="0.69991904497146606" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -95,11 +113,15 @@
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="UNr-1B-l7T" secondAttribute="trailing" constant="20" id="1t3-mD-y7M"/>
-                <constraint firstItem="2gg-P2-uWH" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="100" id="H3I-FQ-rmm"/>
+                <constraint firstItem="2gg-P2-uWH" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="20" id="H3I-FQ-rmm"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="uck-aV-1je" secondAttribute="bottom" id="PsZ-tO-b9D"/>
                 <constraint firstItem="UNr-1B-l7T" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="XQJ-D4-uBa"/>
                 <constraint firstItem="uck-aV-1je" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="XrM-KQ-iOx"/>
+                <constraint firstItem="g1w-0Z-IBn" firstAttribute="top" secondItem="2gg-P2-uWH" secondAttribute="bottom" id="apD-pL-09g"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="g1w-0Z-IBn" secondAttribute="trailing" id="ezo-LS-cmh"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="UNr-1B-l7T" secondAttribute="bottom" constant="40" id="fDc-4K-U1Z"/>
+                <constraint firstItem="g1w-0Z-IBn" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="fvB-I1-CJt"/>
+                <constraint firstItem="UNr-1B-l7T" firstAttribute="top" secondItem="g1w-0Z-IBn" secondAttribute="bottom" constant="8" id="jBo-LP-dgk"/>
                 <constraint firstItem="2gg-P2-uWH" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="jGC-mQ-mOJ"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="2gg-P2-uWH" secondAttribute="trailing" constant="20" id="lMg-bB-bUm"/>
                 <constraint firstItem="uck-aV-1je" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="r1S-D2-Sd6"/>
