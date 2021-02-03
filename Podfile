@@ -13,4 +13,6 @@ target 'MTM' do
   # Google Maps
   pod 'GoogleMaps', '4.1.0'
   pod 'GooglePlaces', '4.1.0'
+  # Side Menu
+  pod 'SideMenuSwift'
 end
