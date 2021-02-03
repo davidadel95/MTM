@@ -6,3 +6,8 @@
 //
 
 import Foundation
+
+struct Constants {
+    static let SOURCE = "Source"
+    static let DESTINATION = "Destination"
+}
