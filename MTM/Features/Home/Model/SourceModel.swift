@@ -9,8 +9,8 @@ import Foundation
 
 struct SourceModel: Decodable {
     let name: String
-    let latitude: Float
-    let longitude: Float
+    let latitude: Double
+    let longitude: Double
     
     var dictionary: [String: Any] {
         return [
@@ -24,11 +24,16 @@ struct SourceModel: Decodable {
 extension SourceModel{
     init?(dictionary: [String : Any]) {
       guard let name = dictionary["name"] as? String,
-          let latitude = dictionary["latitude"] as? Float,
-          let longitude = dictionary["longitude"] as? Float else { return nil }
+          let latitude = dictionary["latitude"] as? Double,
+          let longitude = dictionary["longitude"] as? Double else { return nil }
 
       self.init(name: name,
                 latitude: latitude,
                 longitude: longitude)
     }
+}
+
+struct DestinationModel {
+    let placeID: String
+    let name: String
 }

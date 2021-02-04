@@ -32,7 +32,7 @@ class HomeVC: UIViewController {
     var sourcesGlobal: [SourceModel]?
     var fetcher: GMSAutocompleteFetcher?
 
-    var places = [String]()
+    var places = [DestinationModel]()
     var selectedResultType: ResultType = .firestore
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -125,28 +125,24 @@ class HomeVC: UIViewController {
         }
     }
     
-    
-//    let placesClient = GMSPlacesClient.shared()
-//    func GetPlaceDataByPlaceID(pPlaceID: String){
-//        //  pPlaceID = "ChIJXbmAjccVrjsRlf31U1ZGpDM"
-//        self.placesClient.lookUpPlaceID(pPlaceID, callback: { (place, error) -> Void in
-//            if let error = error {
-//                print("lookup place id query error: \(error.localizedDescription)")
-//                return
-//            }
-//
-//            if let place = place {
-//                print("Place name \(place.name)")
-//                print("Place address \(place.formattedAddress!)")
-//                print("Place placeID \(place.placeID)")
-//                print("Place attributions \(place.attributions)")
-//                print("\(place.coordinate.latitude)")
-//                print("\(place.coordinate.longitude)")
-//            } else {
-//                print("No place details for \(pPlaceID)")
-//            }
-//        })
-//    }
+    func getPlaceDataByPlaceID(pPlaceID: String){
+        //  pPlaceID = "ChIJXbmAjccVrjsRlf31U1ZGpDM"
+        let placesClient = GMSPlacesClient.shared()
+        placesClient.lookUpPlaceID(pPlaceID, callback: { (place, error) -> Void in
+            if let error = error {
+                print("lookup place id query error: \(error.localizedDescription)")
+                return
+            }
+
+            if let place = place {
+                let dest = SourceModel(name: place.name ?? "", latitude: place.coordinate.latitude, longitude: place.coordinate.longitude)
+                
+                self.addDestination(destination: dest)
+            } else {
+                print("No place details for \(pPlaceID)")
+            }
+        })
+    }
 }
 
 extension HomeVC: CLLocationManagerDelegate{
@@ -183,7 +179,7 @@ extension HomeVC: UITableViewDataSource{
         if selectedResultType == .firestore{
             cell.resultLbl.text = self.sourcesGlobal?[indexPath.row].name
         }else{
-            cell.resultLbl.text = self.places[indexPath.row]
+            cell.resultLbl.text = self.places[indexPath.row].name
         }
         cell.selectionStyle = .none
         return cell
@@ -198,7 +194,8 @@ extension HomeVC: UITableViewDelegate{
         if selectedResultType == .firestore{
             sourceTxtFld.text = self.sourcesGlobal?[indexPath.row].name
         }else{
-            destinationTxtFld.text = self.places[indexPath.row]
+            destinationTxtFld.text = self.places[indexPath.row].name
+            getPlaceDataByPlaceID(pPlaceID: self.places[indexPath.row].placeID)
         }
     }
 }
@@ -225,10 +222,11 @@ extension HomeVC: UITextFieldDelegate{
 extension HomeVC: GMSAutocompleteFetcherDelegate {
     func didAutocomplete(with predictions: [GMSAutocompletePrediction]) {
         let resultsStr = NSMutableString()
+        self.places.removeAll()
         for prediction in predictions {
             resultsStr.appendFormat("\n Primary text: %@\n", prediction.attributedPrimaryText)
             resultsStr.appendFormat("Place ID: %@\n", prediction.placeID)
-            self.places.append(prediction.attributedPrimaryText.string)
+            self.places.append(DestinationModel(placeID: prediction.placeID, name: prediction.attributedPrimaryText.string))
             resultsTableView.reloadData()
         }
         print("Results : \(self.places)")
