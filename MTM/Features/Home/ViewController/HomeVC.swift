@@ -8,7 +8,13 @@
 import UIKit
 import Firebase
 import GoogleMaps
+import GooglePlaces
 import FirebaseFirestoreSwift
+
+enum ResultType{
+    case firestore
+    case maps
+}
 
 class HomeVC: UIViewController {
     
@@ -24,16 +30,17 @@ class HomeVC: UIViewController {
     var locationManager = CLLocationManager()
 //    var homeViewModel = HomeViewModel()
     var sourcesGlobal: [SourceModel]?
+    var fetcher: GMSAutocompleteFetcher?
+
+    var places = [String]()
+    var selectedResultType: ResultType = .firestore
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
 //        homeViewModel.fetchData()
 //        addDestination(destination: SourceModel(name: "city stars", latitude: 12.2, longitude: 11.2))
         setupViews()
-//        setupMapView()
-//        fetch()
-//        fetchData()
-        fetchData()
+        setupMapsFetcher()
     }
 
     // MARK: - Actions
@@ -57,7 +64,31 @@ class HomeVC: UIViewController {
         resultsTableView.registerCellNib(cellClass: ResultsTVC.self)
         
         sourceTxtFld.delegate = self
+        destinationTxtFld.delegate = self
     }
+    
+    func setupMapsFetcher(){
+        // Set up the autocomplete filter.
+        let filter = GMSAutocompleteFilter()
+        filter.type = .establishment
+        filter.countries = ["EG"]
+        
+        // Create a new session token.
+        let token: GMSAutocompleteSessionToken = GMSAutocompleteSessionToken.init()
+        
+        // Create the fetcher.
+        fetcher = GMSAutocompleteFetcher(filter: filter)
+        fetcher?.delegate = self
+        fetcher?.provide(token)
+        
+        destinationTxtFld?.addTarget(self, action: #selector(textFieldDidChange(textField:)),
+                                 for: .editingChanged)
+    }
+    
+    @objc func textFieldDidChange(textField: UITextField) {
+        fetcher?.sourceTextHasChanged(textField.text!)  
+    }
+
     
     func fetchData() {
         let db = Firestore.firestore()
@@ -93,6 +124,29 @@ class HomeVC: UIViewController {
             }
         }
     }
+    
+    
+//    let placesClient = GMSPlacesClient.shared()
+//    func GetPlaceDataByPlaceID(pPlaceID: String){
+//        //  pPlaceID = "ChIJXbmAjccVrjsRlf31U1ZGpDM"
+//        self.placesClient.lookUpPlaceID(pPlaceID, callback: { (place, error) -> Void in
+//            if let error = error {
+//                print("lookup place id query error: \(error.localizedDescription)")
+//                return
+//            }
+//
+//            if let place = place {
+//                print("Place name \(place.name)")
+//                print("Place address \(place.formattedAddress!)")
+//                print("Place placeID \(place.placeID)")
+//                print("Place attributions \(place.attributions)")
+//                print("\(place.coordinate.latitude)")
+//                print("\(place.coordinate.longitude)")
+//            } else {
+//                print("No place details for \(pPlaceID)")
+//            }
+//        })
+//    }
 }
 
 extension HomeVC: CLLocationManagerDelegate{
@@ -117,12 +171,20 @@ extension HomeVC: CLLocationManagerDelegate{
 
 extension HomeVC: UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.sourcesGlobal?.count ?? 0
+        if selectedResultType == .firestore{
+            return self.sourcesGlobal?.count ?? 0
+        }else{
+            return self.places.count
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ResultsTVC") as! ResultsTVC
-        cell.resultLbl.text = self.sourcesGlobal?[indexPath.row].name
+        if selectedResultType == .firestore{
+            cell.resultLbl.text = self.sourcesGlobal?[indexPath.row].name
+        }else{
+            cell.resultLbl.text = self.places[indexPath.row]
+        }
         cell.selectionStyle = .none
         return cell
     }
@@ -131,10 +193,48 @@ extension HomeVC: UITableViewDelegate{
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 40
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if selectedResultType == .firestore{
+            sourceTxtFld.text = self.sourcesGlobal?[indexPath.row].name
+        }else{
+            destinationTxtFld.text = self.places[indexPath.row]
+        }
+    }
 }
 
 extension HomeVC: UITextFieldDelegate{
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        resultsContainerView.isHidden = false
+        if textField == sourceTxtFld{
+            self.fetchData()
+            selectedResultType = .firestore
+            resultsTableView.reloadData()
+            resultsContainerView.isHidden = false
+        }else{
+            selectedResultType = .maps
+            resultsTableView.reloadData()
+            resultsContainerView.isHidden = false
+        }
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        resultsContainerView.isHidden = true
+    }
+}
+
+extension HomeVC: GMSAutocompleteFetcherDelegate {
+    func didAutocomplete(with predictions: [GMSAutocompletePrediction]) {
+        let resultsStr = NSMutableString()
+        for prediction in predictions {
+            resultsStr.appendFormat("\n Primary text: %@\n", prediction.attributedPrimaryText)
+            resultsStr.appendFormat("Place ID: %@\n", prediction.placeID)
+            self.places.append(prediction.attributedPrimaryText.string)
+            resultsTableView.reloadData()
+        }
+        print("Results : \(self.places)")
+    }
+    
+    func didFailAutocompleteWithError(_ error: Error) {
+        print("error \(error.localizedDescription)")
     }
 }
