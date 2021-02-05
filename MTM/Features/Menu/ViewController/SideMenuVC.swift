@@ -44,6 +44,7 @@ extension SideMenuVC: UITableViewDataSource{
         let cell = tableView.dequeueReusableCell(withIdentifier: "MenuTVC") as! MenuTVC
         
         cell.selectionStyle = .none
+        cell.itemIcon.image = UIImage(named: self.menuItems[indexPath.row])
         cell.menuLbl.text = self.menuItems[indexPath.row]
         
         return cell
@@ -54,6 +55,6 @@ extension SideMenuVC: UITableViewDataSource{
 
 extension SideMenuVC: UITableViewDelegate{
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 40
+        return 60
     }
 }

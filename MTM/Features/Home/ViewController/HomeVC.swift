@@ -21,12 +21,12 @@ class HomeVC: UIViewController {
     @IBOutlet var resultsTableView: UITableView!
     @IBOutlet var resultsContainerView: UIView!
     
+    @IBOutlet var menuBtn: UIButton!
     @IBOutlet var sourceTxtFld: UITextField!
     @IBOutlet var destinationTxtFld: UITextField!
     
     // MARK: - Variables
     var locationManager = CLLocationManager()
-//    var homeViewModel = HomeViewModel()
     var sourcesGlobal: [LocationModel]?
     var fetcher: GMSAutocompleteFetcher?
 
@@ -35,22 +35,31 @@ class HomeVC: UIViewController {
     var drivers: [LocationModel]?
     var currentSourceLocation: LocationModel?
     var distances = [DistanceModel]()
+    
+    var isBackBtn: Bool = false
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-//        homeViewModel.fetchData()
-//        addDestination(destination: SourceModel(name: "city stars", latitude: 12.2, longitude: 11.2))
         setupViews()
         setupMapView()
         setupMapsFetcher()
         fetchDriversLocations()
-        
     }
 
     // MARK: - Actions
     
     @IBAction func menuTapped(_ sender: Any) {
-        sideMenuController?.revealMenu()
+        
+        if isBackBtn == true{
+            menuBtn.setImage(UIImage(named: "back"), for: .normal)
+            resultsContainerView.isHidden = true
+            view.endEditing(true)
+            isBackBtn = false
+            reloadImgBtn()
+        }else{
+            menuBtn.setImage(UIImage(named: "menu"), for: .normal)
+            sideMenuController?.revealMenu()
+        }
     }
     
     @IBAction func requestRdTapped(_ sender: Any) {
@@ -119,6 +128,14 @@ class HomeVC: UIViewController {
         
         destinationTxtFld?.addTarget(self, action: #selector(textFieldDidChange(textField:)),
                                  for: .editingChanged)
+    }
+    
+    func reloadImgBtn(){
+        if isBackBtn == true{
+            menuBtn.setImage(UIImage(named: "back"), for: .normal)
+        }else{
+            menuBtn.setImage(UIImage(named: "menu"), for: .normal)
+        }
     }
     
     @objc func textFieldDidChange(textField: UITextField) {
@@ -276,6 +293,9 @@ extension HomeVC: UITableViewDelegate{
 
 extension HomeVC: UITextFieldDelegate{
     func textFieldDidBeginEditing(_ textField: UITextField) {
+        isBackBtn = true
+        reloadImgBtn()
+        
         if textField == sourceTxtFld{
             self.fetchSourceLocations()
             selectedResultType = .firestore
@@ -286,10 +306,6 @@ extension HomeVC: UITextFieldDelegate{
             resultsTableView.reloadData()
             resultsContainerView.isHidden = false
         }
-    }
-    
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        resultsContainerView.isHidden = true
     }
 }
 

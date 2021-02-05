@@ -10,6 +10,7 @@ import UIKit
 class MenuTVC: UITableViewCell {
 
     
+    @IBOutlet var itemIcon: UIImageView!
     @IBOutlet var menuLbl: UILabel!
     
     override func awakeFromNib() {
