@@ -9,6 +9,7 @@ import UIKit
 import Firebase
 import GoogleMaps
 import Toast_Swift
+import CoreLocation
 import GooglePlaces
 import SVProgressHUD
 import FirebaseFirestoreSwift
@@ -36,7 +37,8 @@ class HomeVC: UIViewController {
 
     var places = [DestinationModel]()
     var selectedResultType: ResultType = .firestore
-    var sourceLocation: SourceModel?
+    var drivers: [SourceModel]?
+    var currentSourceLocation: SourceModel?
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,12 +47,19 @@ class HomeVC: UIViewController {
         setupViews()
         setupMapView()
         setupMapsFetcher()
+        fetchDriversLocations()
+        
     }
 
     // MARK: - Actions
     
     @IBAction func menuTapped(_ sender: Any) {
         sideMenuController?.revealMenu()
+    }
+    
+    @IBAction func requestRdTapped(_ sender: Any) {
+        let asdd = calculateDistance(source: currentSourceLocation!, destination: self.drivers![0])
+        print(String(format: "The distance to \(self.drivers![0].name) is %.01fkm", asdd))
     }
     // MARK: - Methods
     
@@ -96,21 +105,38 @@ class HomeVC: UIViewController {
     }
 
     
-    func fetchData() {
+    func fetchSourceLocations() {
         let db = Firestore.firestore()
-        var books: [SourceModel]?
+        var sources: [SourceModel]?
         
-        db.collection("Source").addSnapshotListener { (querySnapshot, error) in
+        db.collection(Constants.SOURCE).addSnapshotListener { (querySnapshot, error) in
             guard let documents = querySnapshot?.documents else {
                 print("No documents")
                 return
             }
             
-            books = documents.compactMap { queryDocumentSnapshot -> SourceModel? in
+            sources = documents.compactMap { queryDocumentSnapshot -> SourceModel? in
                 return try? queryDocumentSnapshot.data(as: SourceModel.self)
             }
-            self.sourcesGlobal = books
+            self.sourcesGlobal = sources
             self.resultsTableView.reloadData()
+        }
+    }
+    
+    func fetchDriversLocations() {
+        let db = Firestore.firestore()
+        var drivers: [SourceModel]?
+        
+        db.collection(Constants.DRIVERS).addSnapshotListener { (querySnapshot, error) in
+            guard let documents = querySnapshot?.documents else {
+                print("No documents")
+                return
+            }
+            
+            drivers = documents.compactMap { queryDocumentSnapshot -> SourceModel? in
+                return try? queryDocumentSnapshot.data(as: SourceModel.self)
+            }
+            self.drivers = drivers
         }
     }
     
@@ -153,6 +179,19 @@ class HomeVC: UIViewController {
             }
         })
     }
+    
+    func calculateDistance(source: SourceModel, destination: SourceModel) -> Double{
+        //source location
+        let sourceLocation = CLLocation(latitude: source.latitude, longitude: source.longitude)
+
+        //destination location
+        let destinationLocation = CLLocation(latitude: destination.latitude, longitude: destination.longitude)
+
+        //Measuring source location to destination location (in km)
+        let distance = sourceLocation.distance(from: destinationLocation) / 1000
+        
+        return distance
+    }
 }
 
 extension HomeVC: CLLocationManagerDelegate{
@@ -163,7 +202,10 @@ extension HomeVC: CLLocationManagerDelegate{
 
         self.mapView?.animate(to: camera)
         
-        print((location?.coordinate.latitude)!)
+        
+        currentSourceLocation = SourceModel(name: "Current Location",
+                                            latitude: Double((location?.coordinate.latitude)!),
+                                            longitude: Double((location?.coordinate.longitude)!))
 
         let marker = GMSMarker()
         marker.position = CLLocationCoordinate2D(latitude: (location?.coordinate.latitude)!, longitude: (location?.coordinate.longitude)!)
@@ -203,7 +245,7 @@ extension HomeVC: UITableViewDelegate{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if selectedResultType == .firestore{
             sourceTxtFld.text = self.sourcesGlobal?[indexPath.row].name
-            sourceLocation = self.sourcesGlobal?[indexPath.row]
+            currentSourceLocation = self.sourcesGlobal?[indexPath.row]
         }else{
             destinationTxtFld.text = self.places[indexPath.row].name
             getPlaceDataByPlaceID(pPlaceID: self.places[indexPath.row].placeID)
@@ -214,7 +256,7 @@ extension HomeVC: UITableViewDelegate{
 extension HomeVC: UITextFieldDelegate{
     func textFieldDidBeginEditing(_ textField: UITextField) {
         if textField == sourceTxtFld{
-            self.fetchData()
+            self.fetchSourceLocations()
             selectedResultType = .firestore
             resultsTableView.reloadData()
             resultsContainerView.isHidden = false
