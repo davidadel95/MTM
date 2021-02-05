@@ -10,7 +10,7 @@ import Firebase
 
 class HomeViewModel{
     
-    var source: SourceModel?
+    var source: LocationModel?
     let db = Firestore.firestore()
     private var ref: DocumentReference? = nil
     
@@ -26,7 +26,7 @@ class HomeViewModel{
         }
     }
     
-    func addDestination(destination: SourceModel){
+    func addDestination(destination: LocationModel){
         // Add a new document with a generated ID
         ref = db.collection(Constants.DESTINATION).addDocument(data: [
             "name": destination.name,

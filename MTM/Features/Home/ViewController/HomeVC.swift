@@ -14,11 +14,6 @@ import GooglePlaces
 import SVProgressHUD
 import FirebaseFirestoreSwift
 
-enum ResultType{
-    case firestore
-    case maps
-}
-
 class HomeVC: UIViewController {
     
     // MARK: - Outlets
@@ -32,13 +27,14 @@ class HomeVC: UIViewController {
     // MARK: - Variables
     var locationManager = CLLocationManager()
 //    var homeViewModel = HomeViewModel()
-    var sourcesGlobal: [SourceModel]?
+    var sourcesGlobal: [LocationModel]?
     var fetcher: GMSAutocompleteFetcher?
 
     var places = [DestinationModel]()
     var selectedResultType: ResultType = .firestore
-    var drivers: [SourceModel]?
-    var currentSourceLocation: SourceModel?
+    var drivers: [LocationModel]?
+    var currentSourceLocation: LocationModel?
+    var distances = [DistanceModel]()
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,8 +54,33 @@ class HomeVC: UIViewController {
     }
     
     @IBAction func requestRdTapped(_ sender: Any) {
-        let asdd = calculateDistance(source: currentSourceLocation!, destination: self.drivers![0])
-        print(String(format: "The distance to \(self.drivers![0].name) is %.01fkm", asdd))
+        guard let drivers = self.drivers else{
+            return
+        }
+        
+        self.distances.removeAll()
+        for driver in drivers{
+            let distance = calculateDistance(source: currentSourceLocation!, destination: driver)
+            self.distances.append(DistanceModel(source: currentSourceLocation!, destination: driver, distance: distance))
+        }
+        
+        self.distances.sort{$0.distance < $1.distance}
+        var outputString = ""
+        for distance in distances{
+            outputString.append(String(format: "\n- \(distance.destination.name) is %.01fkm away", distance.distance))
+            //            print(String(format: "The distance from \(distance.source.name) to \(distance.destination.name) is %.01fkm", distance.distance))
+        }
+        
+        print(outputString)
+        
+        // create the alert
+        let alert = UIAlertController(title: "Closest Driver", message: outputString, preferredStyle: UIAlertController.Style.alert)
+        
+        // add an action (button)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+        
+        // show the alert
+        self.present(alert, animated: true, completion: nil)
     }
     // MARK: - Methods
     
@@ -107,7 +128,7 @@ class HomeVC: UIViewController {
     
     func fetchSourceLocations() {
         let db = Firestore.firestore()
-        var sources: [SourceModel]?
+        var sources: [LocationModel]?
         
         db.collection(Constants.SOURCE).addSnapshotListener { (querySnapshot, error) in
             guard let documents = querySnapshot?.documents else {
@@ -115,8 +136,8 @@ class HomeVC: UIViewController {
                 return
             }
             
-            sources = documents.compactMap { queryDocumentSnapshot -> SourceModel? in
-                return try? queryDocumentSnapshot.data(as: SourceModel.self)
+            sources = documents.compactMap { queryDocumentSnapshot -> LocationModel? in
+                return try? queryDocumentSnapshot.data(as: LocationModel.self)
             }
             self.sourcesGlobal = sources
             self.resultsTableView.reloadData()
@@ -125,7 +146,7 @@ class HomeVC: UIViewController {
     
     func fetchDriversLocations() {
         let db = Firestore.firestore()
-        var drivers: [SourceModel]?
+        var drivers: [LocationModel]?
         
         db.collection(Constants.DRIVERS).addSnapshotListener { (querySnapshot, error) in
             guard let documents = querySnapshot?.documents else {
@@ -133,14 +154,14 @@ class HomeVC: UIViewController {
                 return
             }
             
-            drivers = documents.compactMap { queryDocumentSnapshot -> SourceModel? in
-                return try? queryDocumentSnapshot.data(as: SourceModel.self)
+            drivers = documents.compactMap { queryDocumentSnapshot -> LocationModel? in
+                return try? queryDocumentSnapshot.data(as: LocationModel.self)
             }
             self.drivers = drivers
         }
     }
     
-    func addDestination(destination: SourceModel){
+    func addDestination(destination: LocationModel){
         SVProgressHUD.show()
         let db = Firestore.firestore()
         var ref: DocumentReference? = nil
@@ -171,7 +192,7 @@ class HomeVC: UIViewController {
             }
 
             if let place = place {
-                let dest = SourceModel(name: place.name ?? "", latitude: place.coordinate.latitude, longitude: place.coordinate.longitude)
+                let dest = LocationModel(name: place.name ?? "", latitude: place.coordinate.latitude, longitude: place.coordinate.longitude)
                 
                 self.addDestination(destination: dest)
             } else {
@@ -180,7 +201,7 @@ class HomeVC: UIViewController {
         })
     }
     
-    func calculateDistance(source: SourceModel, destination: SourceModel) -> Double{
+    func calculateDistance(source: LocationModel, destination: LocationModel) -> Double{
         //source location
         let sourceLocation = CLLocation(latitude: source.latitude, longitude: source.longitude)
 
@@ -203,7 +224,7 @@ extension HomeVC: CLLocationManagerDelegate{
         self.mapView?.animate(to: camera)
         
         
-        currentSourceLocation = SourceModel(name: "Current Location",
+        currentSourceLocation = LocationModel(name: "Current Location",
                                             latitude: Double((location?.coordinate.latitude)!),
                                             longitude: Double((location?.coordinate.longitude)!))
 

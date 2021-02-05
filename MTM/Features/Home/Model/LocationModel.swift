@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct SourceModel: Decodable {
+struct LocationModel: Decodable {
     let name: String
     let latitude: Double
     let longitude: Double
@@ -21,7 +21,7 @@ struct SourceModel: Decodable {
       }
 }
 
-extension SourceModel{
+extension LocationModel{
     init?(dictionary: [String : Any]) {
       guard let name = dictionary["name"] as? String,
           let latitude = dictionary["latitude"] as? Double,
