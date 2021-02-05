@@ -332,6 +332,8 @@ PODS:
   - nanopb/encode (1.30906.0)
   - PromisesObjC (1.2.12)
   - SideMenuSwift (2.0.7)
+  - SVProgressHUD (2.2.5)
+  - Toast-Swift (5.0.1)
 
 DEPENDENCIES:
   - Firebase/Analytics
@@ -341,6 +343,8 @@ DEPENDENCIES:
   - GooglePlaces (= 4.1.0)
   - IQKeyboardManagerSwift (= 6.3.0)
   - SideMenuSwift
+  - SVProgressHUD
+  - Toast-Swift (~> 5.0.1)
 
 SPEC REPOS:
   trunk:
@@ -365,6 +369,8 @@ SPEC REPOS:
     - nanopb
     - PromisesObjC
     - SideMenuSwift
+    - SVProgressHUD
+    - Toast-Swift
 
 SPEC CHECKSUMS:
   abseil: 6c8eb7892aefa08d929b39f9bb108e5367e3228f
@@ -388,7 +394,9 @@ SPEC CHECKSUMS:
   nanopb: 59317e09cf1f1a0af72f12af412d54edf52603fc
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
   SideMenuSwift: ffbbc88d23741932177ad1320df837cedfb3bc5e
+  SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
+  Toast-Swift: 9b6a70f28b3bf0b96c40d46c0c4b9d6639846711
 
-PODFILE CHECKSUM: 051c966664bbef8a29524fa3670fb0a51c926684
+PODFILE CHECKSUM: 477fcb575a388b5eceb3137c0db0fca70bbaab73
 
 COCOAPODS: 1.8.4

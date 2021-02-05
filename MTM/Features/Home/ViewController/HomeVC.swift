@@ -8,7 +8,9 @@
 import UIKit
 import Firebase
 import GoogleMaps
+import Toast_Swift
 import GooglePlaces
+import SVProgressHUD
 import FirebaseFirestoreSwift
 
 enum ResultType{
@@ -34,19 +36,20 @@ class HomeVC: UIViewController {
 
     var places = [DestinationModel]()
     var selectedResultType: ResultType = .firestore
+    var sourceLocation: SourceModel?
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
 //        homeViewModel.fetchData()
 //        addDestination(destination: SourceModel(name: "city stars", latitude: 12.2, longitude: 11.2))
         setupViews()
+        setupMapView()
         setupMapsFetcher()
     }
 
     // MARK: - Actions
     
     @IBAction func menuTapped(_ sender: Any) {
-        print("menu")
         sideMenuController?.revealMenu()
     }
     // MARK: - Methods
@@ -65,6 +68,9 @@ class HomeVC: UIViewController {
         
         sourceTxtFld.delegate = self
         destinationTxtFld.delegate = self
+        
+        SVProgressHUD.setBackgroundColor(.black)
+        SVProgressHUD.setForegroundColor(.white)
     }
     
     func setupMapsFetcher(){
@@ -109,17 +115,21 @@ class HomeVC: UIViewController {
     }
     
     func addDestination(destination: SourceModel){
+        SVProgressHUD.show()
         let db = Firestore.firestore()
         var ref: DocumentReference? = nil
-        // Add a new document with a generated ID
-        ref = db.collection(Constants.SOURCE).addDocument(data: [
+        ref = db.collection(Constants.DESTINATION).addDocument(data: [
             "name": destination.name,
             "latitude": destination.latitude,
             "longitude": destination.longitude
         ]) { err in
             if let err = err {
+                SVProgressHUD.dismiss()
+                self.view.makeToast("Error adding location: \(err)", duration: 3.0, position: .top)
                 print("Error adding document: \(err)")
             } else {
+                SVProgressHUD.dismiss()
+                self.view.makeToast("Location added to collection", duration: 2.0, position: .top)
                 print("Document added with ID: \(ref!.documentID)")
             }
         }
@@ -193,6 +203,7 @@ extension HomeVC: UITableViewDelegate{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if selectedResultType == .firestore{
             sourceTxtFld.text = self.sourcesGlobal?[indexPath.row].name
+            sourceLocation = self.sourcesGlobal?[indexPath.row]
         }else{
             destinationTxtFld.text = self.places[indexPath.row].name
             getPlaceDataByPlaceID(pPlaceID: self.places[indexPath.row].placeID)

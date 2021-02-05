@@ -17,5 +17,11 @@ target 'MTM' do
   pod 'SideMenuSwift'
   # IQKeyboardManager
   pod 'IQKeyboardManagerSwift', '6.3.0'
+  # Loading Indicator
+  pod 'SVProgressHUD'
+  # Toast
+  pod 'Toast-Swift', '~> 5.0.1'
+
+
 
 end
