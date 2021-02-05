@@ -77,18 +77,10 @@ class HomeVC: UIViewController {
         var outputString = ""
         for distance in distances{
             outputString.append(String(format: "\n- \(distance.destination.name) is %.01fkm away", distance.distance))
-            //            print(String(format: "The distance from \(distance.source.name) to \(distance.destination.name) is %.01fkm", distance.distance))
         }
         
-        print(outputString)
-        
-        // create the alert
         let alert = UIAlertController(title: "Closest Driver", message: outputString, preferredStyle: UIAlertController.Style.alert)
-        
-        // add an action (button)
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-        
-        // show the alert
         self.present(alert, animated: true, completion: nil)
     }
     // MARK: - Methods
@@ -200,7 +192,6 @@ class HomeVC: UIViewController {
     }
     
     func getPlaceDataByPlaceID(pPlaceID: String){
-        //  pPlaceID = "ChIJXbmAjccVrjsRlf31U1ZGpDM"
         let placesClient = GMSPlacesClient.shared()
         placesClient.lookUpPlaceID(pPlaceID, callback: { (place, error) -> Void in
             if let error = error {
@@ -250,7 +241,6 @@ extension HomeVC: CLLocationManagerDelegate{
         marker.title = "You are here"
         marker.map = mapView
         
-        //Finally stop updating location otherwise it will come again and again in this delegate
         self.locationManager.stopUpdatingLocation()
     }
 }
